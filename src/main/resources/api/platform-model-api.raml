@@ -1,0 +1,70 @@
+#%RAML 1.0
+title: Platform Model API
+version: v2
+baseUri: https://apic.sysco.com/it/platform-model/v2
+
+/snacks:
+  /chips:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+                  "chips": [
+                  {"chipId": "123",
+                    "chip": "Doritos"
+                  },
+                  {
+                    "chipId": "234",
+                    "chip": "Cheetos"
+                  },
+                  {
+                    "chipId": "345",
+                    "chip": "Fritos"
+                  } 
+                  ]
+                }
+    post:
+      body:
+        application/json:
+          type: object
+      responses:
+        201:
+          body:
+            application/json:
+              example:
+                {"message": "The chip has been added",
+                 "links" : [
+                   {"href":"https://apic-np.sysco.com/platform-model-app/v1/snacks/chips/chip",
+                    "rel":"delete",
+                    "method": "DELETE"
+                   }
+                 ]
+                }
+    delete:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {"message":"Chip deleted (but not really)"}
+    /{chipID}:
+      description: Chip Identity
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                example:
+                  {
+                    "chipId": "123",
+                    "chip": "Doritos"
+                  }
+          404:
+            body:
+              application/json:
+                example:
+                  message: Chip not found
+
